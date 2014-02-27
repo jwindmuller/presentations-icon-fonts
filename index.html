@@ -1,0 +1,918 @@
+<!doctype html>
+<html>
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Cambo' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>How we made the RPM Icon Font</title>
+  <style type="text/css">
+    body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #222;
+  background-color: #f7f7f7;
+  font-size: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+}
+
+.slide-content {
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  margin: 80px auto 0 auto;
+  padding: 30px;
+
+  font-weight: 200;
+  font-size: 200%;
+  line-height: 1.375;
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.arrow {
+  width: 0; height: 0;
+  border: 30px solid #333;
+  float: left;
+  margin-right: 30px;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prev {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+
+  border-left-width: 0;
+  border-right-width: 50px;
+}
+
+.next {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+
+  border-left-width: 50px;
+  border-right-width: 0;
+}
+
+.prev:hover {
+  border-right-color: #888;
+  cursor: pointer;
+}
+
+.next:hover {
+  border-left-color: #888;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 300%;
+  line-height: 1.2;
+  text-align: center;
+  margin: 170px 0 0;
+}
+
+h2 {
+  font-size: 100%;
+  line-height: 1.2;
+  margin: 5px 0;
+  text-align: center;
+  font-weight: 200;
+}
+
+h3 {
+  font-size: 140%;
+  line-height: 1.2;
+  border-bottom: 1px solid #aaa;
+  margin: 0;
+  padding-bottom: 15px;
+}
+
+ul {
+  padding: 20px 0 0 60px;
+  font-weight: 200;
+  line-height: 1.375;
+}
+
+.author h1 {
+  font-size: 170%;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.author h3 {
+  font-weight: 100;
+  text-align: center;
+  font-size: 95%;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: #44a4dd;
+}
+
+a:hover {
+  color: #66b5ff;
+}
+
+pre {
+  font-size: 60%;
+  line-height: 1.3;
+}
+
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 3px;
+  background-color: #b4b4b4;
+
+  -webkit-transition: width 0.05s ease-out;
+  -moz-transition: width 0.05s ease-out;
+  -o-transition: width 0.05s ease-out;
+  transition: width 0.05s ease-out;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 850px) {
+
+  body {
+    font-size: 70%;
+  }
+
+  .slide-content {
+    width: auto;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+
+  .prev, .prev:hover {
+    border-right-color: rgba(135, 135, 135, 0.5);
+  }
+
+  .next, .next:hover {
+    border-left-color: rgba(135, 135, 135, 0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 50%;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    padding: 10px;
+    margin-top: 10px;
+    height: 340px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: letter;
+  }
+
+  .hidden {
+    display: inline;
+  }
+
+  html {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  body {
+    margin: 0 auto !important;
+    border: 0;
+    padding: 0;
+    float: none !important;
+    overflow: visible;
+    background: none !important;
+    font-size: 52%;
+  }
+
+  .progress, .controls {
+    display: none;
+  }
+
+  .slide {
+    position: static;
+  }
+
+  .slide-content {
+    border: 1px solid #222;
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.5in;
+    overflow: visible;
+  }
+
+  .slide:nth-child(even) {
+    /* 2 slides per page */
+    page-break-before: always;
+  }
+}
+
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+
+code, pre {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  overflow: auto;
+  padding: 6px 10px;
+}
+
+code {
+  padding: 0 5px;
+}
+
+pre>code {
+  margin: 0; padding: 0;
+  border: none;
+  background: transparent;
+}
+
+pre .comment,
+pre .template_comment,
+pre .diff .header,
+pre .javadoc {
+  color: #998;
+  font-style: italic
+}
+
+pre .keyword,
+pre .css .rule .keyword,
+pre .winutils,
+pre .javascript .title,
+pre .nginx .title,
+pre .subst,
+pre .request,
+pre .status {
+  color: #333;
+  font-weight: bold
+}
+
+pre .number,
+pre .hexcolor,
+pre .ruby .constant {
+  color: #099;
+}
+
+pre .string,
+pre .tag .value,
+pre .phpdoc,
+pre .tex .formula {
+  color: #d14
+}
+
+pre .title,
+pre .id {
+  color: #900;
+  font-weight: bold
+}
+
+pre .javascript .title,
+pre .lisp .title,
+pre .clojure .title,
+pre .subst {
+  font-weight: normal
+}
+
+pre .class .title,
+pre .haskell .type,
+pre .vhdl .literal,
+pre .tex .command {
+  color: #458;
+  font-weight: bold
+}
+
+pre .tag,
+pre .tag .title,
+pre .rules .property,
+pre .django .tag .keyword {
+  color: #000080;
+  font-weight: normal
+}
+
+pre .attribute,
+pre .variable,
+pre .lisp .body {
+  color: #008080
+}
+
+pre .regexp {
+  color: #009926
+}
+
+pre .class {
+  color: #458;
+  font-weight: bold
+}
+
+pre .symbol,
+pre .ruby .symbol .string,
+pre .lisp .keyword,
+pre .tex .special,
+pre .prompt {
+  color: #990073
+}
+
+pre .built_in,
+pre .lisp .title,
+pre .clojure .built_in {
+  color: #0086b3
+}
+
+pre .preprocessor,
+pre .pi,
+pre .doctype,
+pre .shebang,
+pre .cdata {
+  color: #999;
+  font-weight: bold
+}
+
+pre .deletion {
+  background: #fdd
+}
+
+pre .addition {
+  background: #dfd
+}
+
+pre .diff .change {
+  background: #0086b3
+}
+
+pre .chunk {
+  color: #aaa
+}
+
+@font-face {
+    font-family: 'RPMEntypo';
+    src: url('rpm/RPMEntypo/rpmentypo-regular.eot?');
+    src: url('rpm/RPMEntypo/rpmentypo-regular.eot?#iefix') format('embedded-opentype'),
+       url('rpm/RPMEntypo/rpmentypo-regular.svg?') format('svg'),
+       url('rpm/RPMEntypo/rpmentypo-regular.woff?') format('woff'),
+       url('rpm/RPMEntypo/rpmentypo-regular.ttf?') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+body {
+  font-family: Montserrat,sans-serif;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+h1, h3 {
+  font-size:200%;
+  font-weight: bold;
+  padding-bottom:0;
+}
+h4 {
+  margin-top:0;
+  margin-bottom:0.5em;
+  font-weight:normal;
+  text-indent:0.3em;
+}
+ol, ul {
+  margin-top:0.3em;
+}
+pre code {
+  color: #333;
+  font-size: 140%;
+}
+
+.keyword {
+  color: #0086b3 !important;
+  font-weight: inherit !important;
+}
+
+.tag {
+  color: #900 !important;
+}
+
+code {
+  background-color: inherit;
+}
+
+em {
+  border-bottom: 1px solid #666;
+}
+
+pre {
+  border-color:#ccc;
+}
+
+
+/* Presentation */
+section {
+  overflow: visible!important;
+}
+.icon {
+    font-family:"RPMEntypo";
+    font-size:200%;
+    line-height: 0.6em;
+}
+.icon-before:before {
+    font-family:"RPMEntypo";
+    font-size:200%;
+    margin-right:0.2em;
+    position: relative;
+    line-height: 0.6em;
+    top:0.05em;
+}
+.cube:before {
+    content:"\23F8";
+}
+.arrows {
+  margin-top: 80px;
+  text-align:center;
+}
+.arrows img {
+  vertical-align:top;
+  width: 100px;
+}
+.arrows .icon {
+  font-size:400%;
+  position: relative;
+  top:50px;
+  line-height:1px;
+  width:40px;
+  text-align:center;
+}
+.arrows .icon.css3 {
+  margin-right:-11px
+}
+.arrows .arrow-icon:before {
+    content:"\E000";
+}
+h4 img,
+h3 img {
+  height:30px;
+  vertical-align: bottom;
+  vertical-align: middle;
+  margin-top: -0.2em;
+}
+h3 img {
+  height:50px
+}
+h3 .icon {
+  font-size: 120%;
+  margin: 0 -0.2em;
+}
+
+h3 .note {
+  font-size:80%;
+}
+.screenshot {
+  margin-top: 1em;
+}
+.screenshot img {
+  margin: auto;
+}
+
+aside {
+  float:right;
+  margin: 0 0 1.5em 1.5em;
+}
+
+.example {
+  text-align:center;
+  font-size:200%;
+}
+
+.amp {
+  font-family:Cambo;
+  color: #66B5FF;
+  font-size:300%;
+  position: relative;
+  top: 0.2em;
+  margin:-0.5em -0.1em;
+  -webkit-text-stroke: 1px #666;
+  display: inline-block;
+}
+strong {
+  font-weight: bold;
+}
+
+@media (max-width: 850px) {
+  h3 img,
+  h4 img {
+    height:35px;
+    width: auto;
+  }
+  h4 img {
+    height:25px;
+    margin-top:0;
+  }
+  .arrows .icon {
+    line-height: 1em;
+    position: static;
+  }
+  .arrows img {
+    width:60px
+  }
+  .arrows .arrow-icon:before {
+    content:"\E4B0";
+    display: block;
+    position: static;
+    line-height: 1em;
+  }
+  .example.mini img {
+    width: auto;
+  }
+  aside {
+    float: none;
+  }
+  aside img {
+    width:auto;
+  }
+}
+  </style>
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+  <div class="slide" id="slide-1">
+    <section class="slide-content"><h1 id="an-icon-font-workflow">An Icon Font Workflow</h1>
+<h2 id="-how-we-did-it-">(How we did it)</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-2">
+    <section class="slide-content"><h3 id="tools">Tools</h3>
+<ol>
+<li>Illustrator</li>
+<li><a href="http://www.high-logic.com/">Font Creator</a></li>
+<li>FontSquirrel&#39;s <a href="http://www.fontsquirrel.com/tools/webfont-generator">Webfont Generator</a></li>
+<li>Text editor</li>
+<li><a href="http://www.babelstone.co.uk/Software/BabelMap.html">BabelMap</a></li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-3">
+    <section class="slide-content"><h3 id="a-good-starting-point">A good starting point</h3>
+<ul>
+<li><a href="http://www.entypo.com/">Entypo</a> 250+ [FREE]</li>
+<li><a href="http://glyphicons.com/">GLYPHICONS</a> 470+ [FREE - $59]</li>
+<li><a href="http://css-tricks.com/flat-icons-icon-fonts/">Many more</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-4">
+    <section class="slide-content"><h1 id="workflow">Workflow</h1>
+<h2 id="from-illustrator-to-a-webfont">From illustrator to a webfont</h2>
+<div class="arrows">
+<img src="img/icons/illustrator.png" alt="Illustrator">
+<span class='icon arrow-icon'></span>
+<img src="img/icons/fontcreator.png" alt="Font Creator">
+<span class='icon arrow-icon'></span>
+<img src="img/icons/font-squirrel-alone.png" alt="Font Creator">
+<span class='icon arrow-icon css3'></span>
+<img src="img/icons/css3.png" alt="Font Creator">
+</div></section>
+  </div>
+  <div class="slide hidden" id="slide-5">
+    <section class="slide-content"><h3 id="workflow">Workflow</h3>
+<h4 id="-illustrator-img-icons-illustrator-png-illustrator"><img src="img/icons/illustrator.png" alt="Illustrator"> Illustrator</h4>
+<ol>
+<li>Install your base font in your system</li>
+<li>Design new glyphs based on previous Glyphs<div class="screenshot">
+<img src="img/illustrator.png" alt="Icon Design in Illustrator">
+</div></li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-6">
+    <section class="slide-content"><h3 id="workflow">Workflow</h3>
+<h4 id="-font-creator-img-icons-fontcreator-png-font-creator"><img src="img/icons/fontcreator.png" alt="Font Creator"> Font Creator</h4>
+<ol>
+<li>Paste in from Illustrator</li>
+<li>Change glyph horizontal metrics<div class="screenshot">
+<img src="img/font-creator1.png" alt="Icon Design in Illustrator">
+</div></li>
+<li>Export!</li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-7">
+    <section class="slide-content"><h3 id="workflow">Workflow</h3>
+<h4 id="-css-img-icons-font-squirrel-alone-png-generate-the-webfont"><img src="img/icons/font-squirrel-alone.png" alt="CSS"> Generate the webfont</h4>
+<p><aside><img src="img/icons/font-squirrel.png" alt="CSS"></aside>
+Font squirrel takes a font file generated and generates the entire package:</p>
+<ul>
+<li>All the different files necessary to support all browsers</li>
+<li>CSS code to “enable” the font</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-8">
+    <section class="slide-content"><h3 id="workflow">Workflow</h3>
+<h4 id="-css-img-icons-css3-png-enable-the-webfont"><img src="img/icons/css3.png" alt="CSS"> Enable the webfont</h4>
+<p>Put this in your CSS file:</p>
+<pre><code>@font-face {
+    font-family: &#39;RPMEntypo&#39;;
+    src: url(&#39;rpmentypo-regular.eot&#39;);
+    src: url(&#39;rpmentypo-regular.eot?#iefix&#39;) format(&#39;embedded-opentype&#39;),
+         url(&#39;rpmentypo-regular.woff&#39;) format(&#39;woff&#39;),
+         url(&#39;rpmentypo-regular.ttf&#39;) format(&#39;truetype&#39;),
+         url(&#39;rpmentypo-regular.svg#rpmentyporegular&#39;) format(&#39;svg&#39;);
+    font-weight: normal;
+    font-style: normal;
+}</code></pre>
+<p><strong>@font-face</strong> definition generated by Font Squirrel&#39;s <a href="http://www.fontsquirrel.com/tools/webfont-generator">Webfont Generator</a> generator.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-9">
+    <section class="slide-content"><h1 id="using-the-webfont">Using the webfont</h1>
+<h2 id="html-span-class-amp-span-css">HTML <span class="amp">&amp;</span> CSS</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-10">
+    <section class="slide-content"><h3 id="-css-img-icons-css3-png-the-css"><img src="img/icons/css3.png" alt="CSS"> The CSS</h3>
+<p>Now you can use “RPMEntypo” as the value in any <code>font-family:</code> css rule.</p>
+<pre><code>.icon {
+    font-family:&quot;RPMEntypo&quot;;
+    font-size:30px;
+}
+.icon-before:before {
+    font-family:&quot;RPMEntypo&quot;;
+}
+.cube:before {
+    content:&quot;\23F8&quot;;
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-11">
+    <section class="slide-content"><h3 id="-css-img-icons-html5-png-and-the-html"><img src="img/icons/html5.png" alt="CSS"> And the HTML</h3>
+<p><strong>Using html entities:</strong></p>
+<pre><code>&lt;!-- This will show an icon by itself  --&gt;
+&lt;div class=&quot;icon&quot;&gt;&amp;#x23F8;&lt;/div&gt;</code></pre>
+<div class="example">
+<div class="icon">&#x23F8;</div>
+</div>
+
+<p><strong>Using <code>:before</code> rule:</strong></p>
+<pre><code>&lt;!-- This will show the icon before the text --&gt;
+&lt;div class=&quot;icon-before cube&quot;&gt;Cube&lt;/div&gt;</code></pre>
+<div class="example">
+<div class="icon-before cube">Cube</div>
+</div></section>
+  </div>
+  <div class="slide hidden" id="slide-12">
+    <section class="slide-content"><h1 id="problems-encountered">Problems encountered</h1>
+<h2 id="after-all-this-is-the-web">After all, this is the web</h2>
+<div class="arrows">
+<img src="img/icons/windows.png" alt="Windows">
+<span class='icon'>&#x21C6;</span>
+<img src="img/icons/apple.png" alt="Mac OS">
+<br><br>
+<img src="img/icons/chrome.png" alt="Chrome">
+<span class='icon'>&#x2753;</span>
+
+</div></section>
+  </div>
+  <div class="slide hidden" id="slide-13">
+    <section class="slide-content"><h3 id="-windows-img-icons-windows-png-span-class-icon-x21c6-span-mac-os-img-icons-apple-png-span-class-note-it-s-entypo-s-fault-span-"><img src="img/icons/windows.png" alt="Windows"> <span class='icon'>&#x21C6;</span> <img src="img/icons/apple.png" alt="Mac OS"> <span class="note">(It&#39;s Entypo&#39;s fault)</span></h3>
+<p><strong>Rendering in MacOS X</strong></p>
+<div class="example">
+<img src="img/icon-render-macos.png" alt="Mac Rendering">
+</div></section>
+  </div>
+  <div class="slide hidden" id="slide-14">
+    <section class="slide-content"><h3 id="-windows-img-icons-windows-png-span-class-icon-x21c6-span-mac-os-img-icons-apple-png-span-class-note-it-s-entypo-s-fault-span-"><img src="img/icons/windows.png" alt="Windows"> <span class='icon'>&#x21C6;</span> <img src="img/icons/apple.png" alt="Mac OS"> <span class="note">(It&#39;s Entypo&#39;s fault)</span></h3>
+<p><strong>Rendering in Windows</strong></p>
+<div class="example">
+<img src="img/icon-render-windows.png" alt="Windows Rendering">
+</div></section>
+  </div>
+  <div class="slide hidden" id="slide-15">
+    <section class="slide-content"><h3 id="-windows-img-icons-windows-png-span-class-icon-x21c6-span-mac-os-img-icons-apple-png-span-class-note-it-s-entypo-s-fault-span-"><img src="img/icons/windows.png" alt="Windows"> <span class='icon'>&#x21C6;</span> <img src="img/icons/apple.png" alt="Mac OS"> <span class="note">(It&#39;s Entypo&#39;s fault)</span></h3>
+<h4 id="the-solution-fix-the-font-metrics">The Solution: “fix” the font metrics</h4>
+<div class="example">
+<img src="img/RPMEntypo-Metrics.png" alt="RPM Entypo font metrics">
+</div></section>
+  </div>
+  <div class="slide hidden" id="slide-16">
+    <section class="slide-content"><h3 id="-chrome-img-icons-chrome-png-chrome-"><img src="img/icons/chrome.png" alt="Chrome"> Chrome?</h3>
+<p>There&#39;s a <a href="https://code.google.com/p/chromium/issues/detail?id=137692">bug in chrome</a>. </p>
+<p>It&#39;s called: <strong>“Horrible font rendering with Google Web Fonts on Chrome for Windows”</strong></p>
+<div class="example">
+<img src="img/chrome-v-ie-render.png" alt="Chrome Rendering">
+</div>
+
+<p>Should be fixed eventually...</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-17">
+    <section class="slide-content"><h3 id="-chrome-img-icons-chrome-png-chrome-"><img src="img/icons/chrome.png" alt="Chrome"> Chrome?</h3>
+<h4 id="the-solution-svg-svg-img-icons-svg-png-">The Solution: SVG <img src="img/icons/svg.png" alt="SVG"></h4>
+<p>By moving svg up on the stack of sources to be <strong>above woff</strong> you make Chrome use it instead:</p>
+<pre><code>@font-face {
+    font-family: &#39;RPMEntypo&#39;;
+    src: url(&#39;rpmentypo-regular.eot&#39;);
+    src: url(&#39;rpmentypo-regular.eot?#iefix&#39;) format(&#39;embedded-opentype&#39;),
+         url(&#39;rpmentypo-regular.svg#rpmentyporegular&#39;) format(&#39;svg&#39;)
+         url(&#39;rpmentypo-regular.woff&#39;) format(&#39;woff&#39;),
+         url(&#39;rpmentypo-regular.ttf&#39;) format(&#39;truetype&#39;);
+    font-weight: normal;
+    font-style: normal;
+}</code></pre>
+<p>But...</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-18">
+    <section class="slide-content"><h3 id="-svg-img-icons-svg-png-chrome-img-icons-chrome-png-span-class-icon-xf44e-span-"><img src="img/icons/svg.png" alt="SVG"> + <img src="img/icons/chrome.png" alt="Chrome">  = <span class="icon">&#xF44E;</span></h3>
+<p>For some reason, svg fonts rendered with a different line-height than other fonts.</p>
+<div class="example mini">
+<img src="img/svg-lineheight.png" alt="SVG">
+</div>
+
+<p>To fix this, open the SVG file on a text editor and change the descent value:</p>
+<pre><code>&lt;font-face units-per-em=&quot;2048&quot; 
+           ascent=&quot;1638&quot;
+           descent=&quot;-410&quot; /&gt;</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-19">
+    <section class="slide-content"><div class="author">
+  <h1 class="name">Joaquín Windmüller</h1>
+    <h3 class="twitter">
+      <a href="http://twitter.com/@joaquin_win">@joaquin_win</a>
+    </h3>
+    <h3 class="url">
+      <a href="http://joaquin.windmuller.ca">http://joaquin.windmuller.ca</a>
+    </h3>
+</div>
+</section>
+  </div>
+
+  <div class="controls">
+    <div class="arrow prev"></div>
+    <div class="arrow next"></div>
+  </div>
+
+
+  <script type="text/javascript">
+    /**
+ * Returns the current page number of the presentation.
+ */
+function currentPosition() {
+  return parseInt(document.querySelector('.slide:not(.hidden)').id.slice(6));
+}
+
+
+/**
+ * Navigates forward n pages
+ * If n is negative, we will navigate in reverse
+ */
+function navigate(n) {
+  var position = currentPosition();
+  var numSlides = document.getElementsByClassName('slide').length;
+
+  /* Positions are 1-indexed, so we need to add and subtract 1 */
+  var nextPosition = (position - 1 + n) % numSlides + 1;
+
+  /* Normalize nextPosition in-case of a negative modulo result */
+  nextPosition = (nextPosition - 1 + numSlides) % numSlides + 1;
+
+  document.getElementById('slide-' + position).classList.add('hidden');
+  document.getElementById('slide-' + nextPosition).classList.remove('hidden');
+
+  updateProgress();
+  updateURL();
+  updateTabIndex();
+}
+
+
+/**
+ * Updates the current URL to include a hashtag of the current page number.
+ */
+function updateURL() {
+  window.history.replaceState({} , null, '#' + currentPosition());
+}
+
+
+/**
+ * Sets the progress indicator.
+ */
+function updateProgress() {
+  var progressBar = document.querySelector('.progress-bar');
+
+  if (progressBar !== null) {
+    var numSlides = document.getElementsByClassName('slide').length;
+    var position = currentPosition() - 1;
+    var percent = (numSlides === 1) ? 100 : 100 * position / (numSlides - 1);
+    progressBar.style.width = percent.toString() + '%';
+  }
+}
+
+
+/**
+ * Removes tabindex property from all links on the current slide, sets
+ * tabindex = -1 for all links on other slides. Prevents slides from appearing
+ * out of control.
+ */
+function updateTabIndex() {
+  var allLinks = document.querySelectorAll('.slide a');
+  var position = currentPosition();
+  var currentPageLinks = document.getElementById('slide-' + position).querySelectorAll('a');
+  var i;
+
+  for (i = 0; i < allLinks.length; i++) {
+    allLinks[i].setAttribute('tabindex', -1);
+  }
+
+  for (i = 0; i < currentPageLinks.length; i++) {
+    currentPageLinks[i].removeAttribute('tabindex');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Update the tabindex to prevent weird slide transitioning
+  updateTabIndex();
+
+  // If the location hash specifies a page number, go to it.
+  var page = window.location.hash.slice(1);
+  if (page) {
+    navigate(parseInt(page) - 1);
+  }
+
+  document.onkeydown = function (e) {
+    var kc = e.keyCode;
+
+    // left, down, H, J, backspace, PgUp - BACK
+    // up, right, K, L, space, enter, PgDn - FORWARD
+    if (kc === 37 || kc === 40 || kc === 8 || kc === 72 || kc === 74 || kc === 33) {
+      navigate(-1);
+    } else if (kc === 38 || kc === 39 || kc === 13 || kc === 32 || kc === 75 || kc === 76 || kc === 34) {
+      navigate(1);
+    }
+  };
+
+  if (document.querySelector('.next') && document.querySelector('.prev')) {
+    document.querySelector('.next').onclick = function (e) {
+      e.preventDefault();
+      navigate(1);
+    };
+
+    document.querySelector('.prev').onclick = function (e) {
+      e.preventDefault();
+      navigate(-1);
+    };
+  }
+});
+
+
+  </script>
+</body>
+</html>
