@@ -147,7 +147,6 @@ aside {
 strong {
   font-weight: bold;
 }
-
 @media (max-width: 850px) {
   h3 img,
   h4 img {
@@ -158,6 +157,7 @@ strong {
     height:25px;
     margin-top:0;
   }
+
   .arrows .icon {
     line-height: 1em;
     position: static;
@@ -174,10 +174,18 @@ strong {
   .example.mini img {
     width: auto;
   }
+}
+@media (max-width: 600px) {
   aside {
     float: none;
   }
   aside img {
     width:auto;
+  }
+  .controls, .slide {
+    position:static;
+  }
+  .slide-content {
+    height:auto;
   }
 }
