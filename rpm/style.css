@@ -136,8 +136,8 @@ aside {
 h1 .amp  {
   font-size:200%;
   display: inline-block;
-  margin-left: -30px;
-  margin-right: -20px;
+  margin-left: -0.3em;
+  margin-right: -0.2em;
 }
 h3 .amp {
   font-size: 100%;

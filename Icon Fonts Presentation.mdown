@@ -135,7 +135,7 @@ Now you can use “RPMEntypo” as the value in any `font-family:` css rule.
 <div class="icon">&#x23F8;</div>
 </div>
 
-**Using `:before` rule:**
+**Using a `:before` rule:**
 
     <!-- This will show the icon before the text -->
     <div class="icon-before cube">Cube</div>
