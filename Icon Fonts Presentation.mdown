@@ -74,7 +74,7 @@ theme: rpm
 #### ![CSS](img/icons/font-squirrel-alone.png) Generate the webfont
 
 <aside>![CSS](img/icons/font-squirrel.png)</aside>
-Font squirrel takes a font file generated and generates the entire package:
+Font squirrel takes the font file and generates the entire package:
 
 - All the different files necessary to support all browsers
 - CSS code to “enable” the font
