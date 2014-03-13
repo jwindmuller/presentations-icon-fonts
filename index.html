@@ -529,6 +529,9 @@ aside {
   font-size:200%;
 }
 
+h3 .amp {
+  font-size: 100%;
+}
 .amp {
   font-family:Cambo;
   color: #66B5FF;
@@ -656,7 +659,7 @@ strong {
     <section class="slide-content"><h3 id="workflow">Workflow</h3>
 <h4 id="-css-img-icons-font-squirrel-alone-png-generate-the-webfont"><img src="img/icons/font-squirrel-alone.png" alt="CSS"> Generate the webfont</h4>
 <p><aside><img src="img/icons/font-squirrel.png" alt="CSS"></aside>
-Font squirrel takes a font file generated and generates the entire package:</p>
+Font squirrel takes a font file and generates the entire package:</p>
 <ul>
 <li>All the different files necessary to support all browsers</li>
 <li>CSS code to “enable” the font</li>
@@ -716,6 +719,25 @@ Font squirrel takes a font file generated and generates the entire package:</p>
 </div></section>
   </div>
   <div class="slide hidden" id="slide-12">
+    <section class="slide-content"><h3 id="html-codes-span-class-note-amp-xc0be-span-">HTML Codes <span class="note">(&amp;#xC0BE;)</span></h3>
+<h4 id="copy-from-font-creator">Copy from Font Creator</h4>
+<p>Select the glyphs you want and press “P” (for Preview)</p>
+<p><img src="img/font-creator2.png" alt="Font Creator Preview"></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-13">
+    <section class="slide-content"><h3 id="html-codes-span-class-note-amp-xb33f-span-">HTML Codes <span class="note">(&amp;#xB33F;)</span></h3>
+<h4 id="paste-into-babel-map">Paste into Babel Map</h4>
+<p><img src="img/babel.png" alt="Font Creator Preview"></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-14">
+    <section class="slide-content"><h3 id="html-codes-span-class-note-amp-xbbad-span-">HTML Codes <span class="note">(&amp;#xBBAD;)</span></h3>
+<h4 id="roll-your-own">Roll your own</h4>
+<p><img src="img/glyph-codes.png" alt="Font Creator Preview"></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-15">
     <section class="slide-content"><h1 id="problems-encountered">Problems encountered</h1>
 <h2 id="after-all-this-is-the-web">After all, this is the web</h2>
 <div class="arrows">
@@ -728,28 +750,28 @@ Font squirrel takes a font file generated and generates the entire package:</p>
 
 </div></section>
   </div>
-  <div class="slide hidden" id="slide-13">
+  <div class="slide hidden" id="slide-16">
     <section class="slide-content"><h3 id="-windows-img-icons-windows-png-span-class-icon-x21c6-span-mac-os-img-icons-apple-png-span-class-note-it-s-entypo-s-fault-span-"><img src="img/icons/windows.png" alt="Windows"> <span class='icon'>&#x21C6;</span> <img src="img/icons/apple.png" alt="Mac OS"> <span class="note">(It&#39;s Entypo&#39;s fault)</span></h3>
 <p><strong>Rendering in MacOS X</strong></p>
 <div class="example">
 <img src="img/icon-render-macos.png" alt="Mac Rendering">
 </div></section>
   </div>
-  <div class="slide hidden" id="slide-14">
+  <div class="slide hidden" id="slide-17">
     <section class="slide-content"><h3 id="-windows-img-icons-windows-png-span-class-icon-x21c6-span-mac-os-img-icons-apple-png-span-class-note-it-s-entypo-s-fault-span-"><img src="img/icons/windows.png" alt="Windows"> <span class='icon'>&#x21C6;</span> <img src="img/icons/apple.png" alt="Mac OS"> <span class="note">(It&#39;s Entypo&#39;s fault)</span></h3>
 <p><strong>Rendering in Windows</strong></p>
 <div class="example">
 <img src="img/icon-render-windows.png" alt="Windows Rendering">
 </div></section>
   </div>
-  <div class="slide hidden" id="slide-15">
+  <div class="slide hidden" id="slide-18">
     <section class="slide-content"><h3 id="-windows-img-icons-windows-png-span-class-icon-x21c6-span-mac-os-img-icons-apple-png-span-class-note-it-s-entypo-s-fault-span-"><img src="img/icons/windows.png" alt="Windows"> <span class='icon'>&#x21C6;</span> <img src="img/icons/apple.png" alt="Mac OS"> <span class="note">(It&#39;s Entypo&#39;s fault)</span></h3>
 <h4 id="the-solution-fix-the-font-metrics">The Solution: “fix” the font metrics</h4>
 <div class="example">
 <img src="img/RPMEntypo-Metrics.png" alt="RPM Entypo font metrics">
 </div></section>
   </div>
-  <div class="slide hidden" id="slide-16">
+  <div class="slide hidden" id="slide-19">
     <section class="slide-content"><h3 id="-chrome-img-icons-chrome-png-chrome-"><img src="img/icons/chrome.png" alt="Chrome"> Chrome?</h3>
 <p>There&#39;s a <a href="https://code.google.com/p/chromium/issues/detail?id=137692">bug in chrome</a>. </p>
 <p>It&#39;s called: <strong>“Horrible font rendering with Google Web Fonts on Chrome for Windows”</strong></p>
@@ -760,7 +782,7 @@ Font squirrel takes a font file generated and generates the entire package:</p>
 <p>Should be fixed eventually...</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-17">
+  <div class="slide hidden" id="slide-20">
     <section class="slide-content"><h3 id="-chrome-img-icons-chrome-png-chrome-"><img src="img/icons/chrome.png" alt="Chrome"> Chrome?</h3>
 <h4 id="the-solution-svg-svg-img-icons-svg-png-">The Solution: SVG <img src="img/icons/svg.png" alt="SVG"></h4>
 <p>By moving svg up on the stack of sources to be <strong>above woff</strong> you make Chrome use it instead:</p>
@@ -777,9 +799,9 @@ Font squirrel takes a font file generated and generates the entire package:</p>
 <p>But...</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-18">
+  <div class="slide hidden" id="slide-21">
     <section class="slide-content"><h3 id="-svg-img-icons-svg-png-chrome-img-icons-chrome-png-span-class-icon-xf44e-span-"><img src="img/icons/svg.png" alt="SVG"> + <img src="img/icons/chrome.png" alt="Chrome">  = <span class="icon">&#xF44E;</span></h3>
-<p>For some reason, svg fonts rendered with a different line-height than other fonts.</p>
+<p>For some reason, svg fonts are rendered with a different line-height than other fonts.</p>
 <div class="example mini">
 <img src="img/svg-lineheight.png" alt="SVG">
 </div>
@@ -790,7 +812,7 @@ Font squirrel takes a font file generated and generates the entire package:</p>
            descent=&quot;-410&quot; /&gt;</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-19">
+  <div class="slide hidden" id="slide-22">
     <section class="slide-content"><div class="author">
   <h1 class="name">Joaquín Windmüller</h1>
     <h3 class="twitter">

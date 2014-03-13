@@ -74,7 +74,7 @@ theme: rpm
 #### ![CSS](img/icons/font-squirrel-alone.png) Generate the webfont
 
 <aside>![CSS](img/icons/font-squirrel.png)</aside>
-Font squirrel takes the font file and generates the entire package:
+Font squirrel takes a font file and generates the entire package:
 
 - All the different files necessary to support all browsers
 - CSS code to “enable” the font
@@ -144,6 +144,28 @@ Now you can use “RPMEntypo” as the value in any `font-family:` css rule.
 <div class="icon-before cube">Cube</div>
 </div>
 
+--
+
+### HTML Codes <span class="note">(&amp;#xC0BE;)</span>
+#### Copy from Font Creator
+
+Select the glyphs you want and press “P” (for Preview)
+
+![Font Creator Preview](img/font-creator2.png)
+
+--
+
+### HTML Codes <span class="note">(&amp;#xB33F;)</span>
+#### Paste into Babel Map
+
+![Font Creator Preview](img/babel.png)
+
+--
+
+### HTML Codes <span class="note">(&amp;#xBBAD;)</span>
+#### Roll your own
+
+![Font Creator Preview](img/glyph-codes.png)
 --
 
 # Problems encountered
@@ -226,7 +248,7 @@ But...
 
 ### ![SVG](img/icons/svg.png) + ![Chrome](img/icons/chrome.png)  = <span class="icon">&#xF44E;</span>
 
-For some reason, svg fonts rendered with a different line-height than other fonts.
+For some reason, svg fonts are rendered with a different line-height than other fonts.
 
 <div class="example mini">
 ![SVG](img/svg-lineheight.png)
