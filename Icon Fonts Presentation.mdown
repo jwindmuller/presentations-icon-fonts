@@ -260,3 +260,6 @@ To fix this, open the SVG file on a text editor and change the descent value:
                ascent="1638"
                descent="-410" />
 
+--
+
+# Questions <br> <span class="amp">&</span> Answers
